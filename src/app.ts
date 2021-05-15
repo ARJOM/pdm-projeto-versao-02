@@ -7,10 +7,10 @@ interface AppConfig {
     PORT?: number
 }
 
+export let db: Sequelize;
 class App {
 
     public main: Express;
-    public db: Sequelize | undefined;
 
     constructor({ PORT }: AppConfig){
         this.main = express();
@@ -27,11 +27,11 @@ class App {
     }
 
     private connectDatabase(): void{
-        this.db = new Sequelize({
+        db = new Sequelize({
             dialect: 'sqlite',
             storage: './database.sqlite'
           })
-        this.db.authenticate()
+        db.authenticate()
             .then(() => console.log("Connected to database"))
             .catch(err => console.error(err));
     }
