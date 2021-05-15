@@ -1,4 +1,5 @@
 import express, { Express, json, Request, Response } from 'express';
+import { Sequelize } from 'sequelize';
 import Cors from 'cors';
 import Routes from './routes/index';
 
@@ -9,6 +10,7 @@ interface AppConfig {
 class App {
 
     public main: Express;
+    public db: Sequelize | undefined;
 
     constructor({ PORT }: AppConfig){
         this.main = express();
@@ -25,7 +27,13 @@ class App {
     }
 
     private connectDatabase(): void{
-        // Logic to connect to database
+        this.db = new Sequelize({
+            dialect: 'sqlite',
+            storage: './database.sqlite'
+          })
+        this.db.authenticate()
+            .then(() => console.log("Connected to database"))
+            .catch(err => console.error(err));
     }
 
     private routes(): void{
