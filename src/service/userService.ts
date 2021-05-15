@@ -11,7 +11,19 @@ class UserService{
     static async list() {
         return await User.findAll();
     }
+
+    static async getById(id: number){
+        return await User.findOne({where: {id}})
+    }
+
+    static async update(id: number, updatedUser: UserInterface){
+        return await User.update(updatedUser, {where: {id}});
+    }
     
+    static async delete(id: number){
+        return await User.update({ isActive: false }, {where: {id}});
+    }
+
 }
 
 export default UserService;
