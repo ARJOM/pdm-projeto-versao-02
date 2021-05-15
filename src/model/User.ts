@@ -1,63 +1,44 @@
-import { Sequelize, Model, DataTypes } from 'sequelize';
-import { db } from '../app';
+import { Table, Column, Model, Default, Unique, AllowNull } from 'sequelize-typescript';
+import { DataType } from 'sequelize-typescript';
+@Table
+class User extends Model {
+  @AllowNull(false)
+  @Column(DataType.TEXT)
+  nome!: string
 
-class User extends Model{
-    public id!: number;
-    public nome!: string;
-    public email!: string;
-    public telefone!: string;
-    public senha!: string;
-    public cidade!: string;
-    public bairro!: string;
-    public rua!: string;
-    public numero!: string | null;
-    public isActive!: boolean;
+  @Unique
+  @AllowNull(false)
+  @Column(DataType.TEXT)
+  email!: string
+  
+  @AllowNull(false)
+  @Column(DataType.TEXT)
+  telefone!: string
+  
+  @AllowNull(false)
+  @Column(DataType.TEXT)
+  senha!: string
+  
+  @AllowNull(false)
+  @Column(DataType.TEXT)
+  cidade!: string
+  
+  @AllowNull(false)
+  @Column(DataType.TEXT)
+  bairro!: string
+  
+  @AllowNull(false)
+  @Column(DataType.TEXT)
+  rua!: string
+  
+  @AllowNull(true)
+  @Column(DataType.TEXT)
+  numero!: string | null
+  
+  @AllowNull(false)
+  @Default(true)
+  @Column(DataType.BOOLEAN)
+  isActive!: boolean
 }
 
-User.init({
-    id: {
-        type: DataTypes.INTEGER.UNSIGNED,
-        autoIncrement: true,
-        primaryKey: true,
-    },
-    nome: {
-        type: new DataTypes.STRING,
-        allowNull: false,
-    },
-    email: {
-        type: new DataTypes.STRING,
-        allowNull: false,
-    },
-    telefone: {
-        type: new DataTypes.STRING,
-        allowNull: false,
-    },
-    senha: {
-        type: new DataTypes.STRING,
-        allowNull: false,
-    },
-    cidade: {
-        type: new DataTypes.STRING,
-        allowNull: false,
-    },
-    bairro: {
-        type: new DataTypes.STRING,
-        allowNull: false,
-    },
-    rua: {
-        type: new DataTypes.STRING,
-        allowNull: false,
-    },
-    numero: {
-        type: new DataTypes.STRING,
-        allowNull: true,
-    },
-    isActive: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-    },
-}, {
-    tableName: "usuarios",
-    sequelize: db
-  }
-);
+export default User;

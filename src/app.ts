@@ -1,5 +1,5 @@
 import express, { Express, json, Request, Response } from 'express';
-import { Sequelize } from 'sequelize';
+import { Sequelize } from 'sequelize-typescript';
 import Cors from 'cors';
 import Routes from './routes/index';
 
@@ -7,10 +7,10 @@ interface AppConfig {
     PORT?: number
 }
 
-export let db: Sequelize;
 class App {
 
     public main: Express;
+    public db: Sequelize | undefined;
 
     constructor({ PORT }: AppConfig){
         this.main = express();
@@ -27,11 +27,14 @@ class App {
     }
 
     private connectDatabase(): void{
-        db = new Sequelize({
+        this.db = new Sequelize({
             dialect: 'sqlite',
-            storage: './database.sqlite'
+            storage: './database.sqlite',
+            models: [__dirname + '/model'],
+            // sync: { force: true },
           })
-        db.authenticate()
+        this.db.sync(); // cria tabelas
+        this.db.authenticate()
             .then(() => console.log("Connected to database"))
             .catch(err => console.error(err));
     }
