@@ -6,7 +6,9 @@ import verifyJWT from '../utils/verifyAuth';
 const routes = Router();
 
 routes.post('/real-estate', verifyJWT, (req: Request, res: Response) => {
+    const id = req.params.id as unknown as number;
     const realEstate = req.body as RealEstateInterface;
+    realEstate.userId = id
     RealEstateService.save(realEstate)
         .then(result => res.status(201).json(result))
         .catch(err => res.status(400).json(err));
