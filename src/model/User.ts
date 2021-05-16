@@ -1,6 +1,7 @@
 import { Table, Column, Model, Default, Unique, AllowNull, HasMany } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript';
 import RealEstate from './RealEstate';
+import passwordEncrypt from '../utils/passwordEncrypt';
 @Table
 class User extends Model {
   @AllowNull(false)
@@ -18,7 +19,13 @@ class User extends Model {
   
   @AllowNull(false)
   @Column(DataType.TEXT)
-  senha!: string
+  get senha(): string {
+    return this.getDataValue('senha')
+  }
+
+  set senha(value: string) {
+    this.setDataValue('senha', passwordEncrypt(value))
+  }
   
   @AllowNull(false)
   @Column(DataType.TEXT)

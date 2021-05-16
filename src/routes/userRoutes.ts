@@ -1,6 +1,7 @@
 import { Request, Response, Router } from 'express';
 import UserService from '../service/userService';
 import UserInterface from '../interfaces/UserInterface';
+import verifyJWT from '../utils/verifyAuth';
 
 const routes = Router();
 
@@ -30,7 +31,7 @@ routes.get('/users/:id', (req: Request, res: Response) => {
         .catch(err => res.status(500).json(err));
 })
 
-routes.put('/users/:id', (req: Request, res: Response) => {
+routes.put('/users/:id', verifyJWT, (req: Request, res: Response) => {
     const id = req.params.id as unknown as number;
     const user = req.body as UserInterface;
     UserService.update(id, user)
@@ -38,7 +39,7 @@ routes.put('/users/:id', (req: Request, res: Response) => {
         .catch(err => res.status(500).json(err))
 })
 
-routes.delete('/users/:id', (req: Request, res: Response) => {
+routes.delete('/users/:id', verifyJWT, (req: Request, res: Response) => {
     const id = req.params.id as unknown as number;
     UserService.delete(id)
         .then(result => res.json(result))

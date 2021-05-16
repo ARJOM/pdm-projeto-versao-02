@@ -1,10 +1,11 @@
 import { Request, Response, Router } from 'express';
 import RealEstateService from '../service/realEstateService';
 import RealEstateInterface from '../interfaces/RealEstateInterface';
+import verifyJWT from '../utils/verifyAuth';
 
 const routes = Router();
 
-routes.post('/real-estate', (req: Request, res: Response) => {
+routes.post('/real-estate', verifyJWT, (req: Request, res: Response) => {
     const realEstate = req.body as RealEstateInterface;
     RealEstateService.save(realEstate)
         .then(result => res.status(201).json(result))
@@ -30,7 +31,7 @@ routes.get('/real-estate/:id', (req: Request, res: Response) => {
         .catch(err => res.status(500).json(err));
 })
 
-routes.put('/real-estate/:id', (req: Request, res: Response) => {
+routes.put('/real-estate/:id', verifyJWT, (req: Request, res: Response) => {
     const id = req.params.id as unknown as number;
     const realEstate = req.body as RealEstateInterface;
     RealEstateService.update(id, realEstate)
@@ -38,7 +39,7 @@ routes.put('/real-estate/:id', (req: Request, res: Response) => {
         .catch(err => res.status(500).json(err))
 })
 
-routes.delete('/real-estate/:id', (req: Request, res: Response) => {
+routes.delete('/real-estate/:id', verifyJWT, (req: Request, res: Response) => {
     const id = req.params.id as unknown as number;
     RealEstateService.delete(id)
         .then(result => res.json(result))
