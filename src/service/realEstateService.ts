@@ -42,6 +42,10 @@ class RealEstateService{
         })
     }
 
+    static async findByUser(userId: number){
+        return await RealEstate.findAll({where: {userId, isActive: true}})
+    }
+
 }
 
 export default RealEstateService;

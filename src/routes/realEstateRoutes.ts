@@ -34,6 +34,13 @@ routes.get('/real-estate', (req: Request, res: Response) => {
     }
 })
 
+routes.get('/real-estate/user', verifyJWT, (req: Request, res: Response) => {
+    const id = req.params.id as unknown as number;
+    RealEstateService.findByUser(id)
+        .then(result => res.json(result))
+        .catch(err => res.status(500).json(err));
+})
+
 routes.get('/real-estate/:id', (req: Request, res: Response) => {
     const id = req.params.id as unknown as number;
     RealEstateService.getById(id)

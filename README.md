@@ -33,7 +33,7 @@
 
 ## Documentação
 
-Todas as rotas da aplicação podem ser acessadas com o prefixo `/api/v1`.
+Todas as rotas da aplicação podem ser acessadas com o prefixo `/api/v1`. Os itens com * ao lado do método necessitam do token de autenticação enviado através de um header chamado `authorization`.
 
 ### Hello World
 
@@ -55,8 +55,8 @@ Retorno esperado
 /users | POST | Recurso de criação de usuário, espera um json no corpo da requisição
 /users | GET | Recurso de listagem de usuário, lista todos os usuários ativos registrados
 /users/:id | GET | Recurso de detalhe de usuário, espera o id do usuário na url
-/users/:id | PUT | Recurso de atualização de usuário, espera o id do usuário na url e um json no corpo da requisição
-/users/:id | DELETE | Recurso de exclusão de usuário, espera o id do usuário na url
+/users/:id | PUT* | Recurso de atualização de usuário, espera o id do usuário na url e um json no corpo da requisição
+/users/:id | DELETE* | Recurso de exclusão de usuário, espera o id do usuário na url
 
 Usuário
 ```
@@ -81,13 +81,14 @@ OBS: Os campos id, isActive, createdAt e updatedAt não precisam ser informados 
 
  URL | Método | Descrição 
 ------|------------|-----
-/real-estates | POST | Recurso de criação de usuário, espera um json no corpo da requisição
+/real-estates | POST* | Recurso de criação de usuário, espera um json no corpo da requisição
 /real-estates | GET | Recurso de listagem de imóvel, lista todos os imóveis ativos registrados
 /real-estates?cidade= | GET | Recurso de listagem de imóvel, lista todos os imóveis ativos registrados com base na cidade informada
 /real-estates?menorValor=&maiorValor | GET | Recurso de listagem de imóvel, lista todos os imóveis ativos registrados, ordenados por preço entre o menor valor informado e o maior valor informado
 /real-estates/:id | GET | Recurso de detalhe de imóvel, espera o id do imóvel na url
-/real-estates/:id | PUT | Recurso de atualização de imóvel, espera o id do imóvel na url e um json no corpo da requisição
-/real-estates/:id | DELETE | Recurso de exclusão de imóvel, espera o id do imóvel na url
+/real-estates/:id | PUT* | Recurso de atualização de imóvel, espera o id do imóvel na url e um json no corpo da requisição
+/real-estates/:id | DELETE* | Recurso de exclusão de imóvel, espera o id do imóvel na url
+/real-estates/user | GET* | Recurso de listagem de imóvel, lista todos os imóveis ativos registrados assosciados ao usuário logado
 
 Imóvel
 ```
@@ -115,8 +116,8 @@ URL | Método | Descrição
 Corpo da requisição do login
 ```
 {
-	email: string
-	senha: string
+  email: string
+  senha: string
 }
 ```
 
