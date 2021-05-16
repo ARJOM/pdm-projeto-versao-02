@@ -1,25 +1,25 @@
 import { Request, Response, Router } from 'express';
-import UserService from '../service/userService';
-import UserInterface from '../interfaces/UserInterface';
+import RealEstateService from '../service/realEstateService';
+import RealEstateInterface from '../interfaces/RealEstateInterface';
 
 const routes = Router();
 
-routes.post('/users', (req: Request, res: Response) => {
-    const user = req.body as UserInterface;
-    UserService.save(user)
+routes.post('/real-estate', (req: Request, res: Response) => {
+    const realEstate = req.body as RealEstateInterface;
+    RealEstateService.save(realEstate)
         .then(result => res.status(201).json(result))
         .catch(err => res.status(400).json(err));
 })
 
-routes.get('/users', (req: Request, res: Response) => {
-    UserService.list()
+routes.get('/real-estate', (req: Request, res: Response) => {
+    RealEstateService.list()
         .then(result => res.json(result))
         .catch(err => res.status(500).json(err));
 })
 
-routes.get('/users/:id', (req: Request, res: Response) => {
+routes.get('/real-estate/:id', (req: Request, res: Response) => {
     const id = req.params.id as unknown as number;
-    UserService.getById(id)
+    RealEstateService.getById(id)
         .then(result => {
             if (result !== null){
                 res.json(result)
@@ -30,17 +30,17 @@ routes.get('/users/:id', (req: Request, res: Response) => {
         .catch(err => res.status(500).json(err));
 })
 
-routes.put('/users/:id', (req: Request, res: Response) => {
+routes.put('/real-estate/:id', (req: Request, res: Response) => {
     const id = req.params.id as unknown as number;
-    const user = req.body as UserInterface;
-    UserService.update(id, user)
+    const realEstate = req.body as RealEstateInterface;
+    RealEstateService.update(id, realEstate)
         .then(result => res.json(result))
         .catch(err => res.status(500).json(err))
 })
 
-routes.delete('/users/:id', (req: Request, res: Response) => {
+routes.delete('/real-estate/:id', (req: Request, res: Response) => {
     const id = req.params.id as unknown as number;
-    UserService.delete(id)
+    RealEstateService.delete(id)
         .then(result => res.json(result))
         .catch(err => res.status(500).json(err))
 })

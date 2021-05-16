@@ -1,25 +1,21 @@
-import { Table, Column, Model, Default, Unique, AllowNull, HasMany } from 'sequelize-typescript';
+import { Table, Column, Model, Default, AllowNull, ForeignKey, BelongsTo } from 'sequelize-typescript';
 import { DataType } from 'sequelize-typescript';
-import RealEstate from './RealEstate';
-@Table
-class User extends Model {
-  @AllowNull(false)
-  @Column(DataType.TEXT)
-  nome!: string
+import User from './User';
 
-  @Unique
+@Table
+class RealEstate extends Model {
   @AllowNull(false)
   @Column(DataType.TEXT)
-  email!: string
-  
+  descricao!: string
+
   @AllowNull(false)
   @Column(DataType.TEXT)
-  telefone!: string
-  
+  imagens!: string
+
   @AllowNull(false)
-  @Column(DataType.TEXT)
-  senha!: string
-  
+  @Column(DataType.NUMBER)
+  metrosQuadrados!: number
+
   @AllowNull(false)
   @Column(DataType.TEXT)
   cidade!: string
@@ -41,8 +37,12 @@ class User extends Model {
   @Column(DataType.BOOLEAN)
   isActive!: boolean
 
-  @HasMany(() => RealEstate)
-  realEstate!: RealEstate[]
+  @ForeignKey(() => User)
+  @Column(DataType.NUMBER)
+  userId!: number
+
+  @BelongsTo(() => User)
+  user!: User
 }
 
-export default User;
+export default RealEstate;
