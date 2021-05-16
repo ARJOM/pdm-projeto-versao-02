@@ -33,6 +33,21 @@
 
 ## Documentação
 
+Todas as rotas da aplicação podem ser acessadas com o prefixo `/api/v1`.
+
+### Hello World
+
+ URL | Método | Descrição 
+------|------------|-----
+/ | GET | Rota para testar se a aplicação está funcionando
+
+Retorno esperado
+```
+{
+  "name": "pdm-projeto-versao-02",
+  "version": "1.0.0"
+}
+```
 ### Usuários
 
  URL | Método | Descrição 
