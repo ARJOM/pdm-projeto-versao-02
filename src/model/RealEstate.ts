@@ -5,6 +5,10 @@ import User from './User';
 @Table
 class RealEstate extends Model {
   @AllowNull(false)
+  @Column(DataType.NUMBER)
+  preco!: number
+  
+  @AllowNull(false)
   @Column(DataType.TEXT)
   descricao!: string
 

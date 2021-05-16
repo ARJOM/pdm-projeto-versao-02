@@ -8,7 +8,7 @@ const { SECRET } = process.env as any;
 
 
 export default function verifyJWT(req: Request, res: Response, next: NextFunction){
-    const token = req.headers['authentication'];
+    const token = req.headers['authorization'];
 
     if (!token) return res.status(401).json({ auth: false, message: 'Token não enviado.' });
 

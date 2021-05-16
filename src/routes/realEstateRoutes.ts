@@ -2,6 +2,7 @@ import { Request, Response, Router } from 'express';
 import RealEstateService from '../service/realEstateService';
 import RealEstateInterface from '../interfaces/RealEstateInterface';
 import verifyJWT from '../utils/verifyAuth';
+import RealEstate from '../model/RealEstate';
 
 const routes = Router();
 
@@ -15,9 +16,22 @@ routes.post('/real-estate', verifyJWT, (req: Request, res: Response) => {
 })
 
 routes.get('/real-estate', (req: Request, res: Response) => {
-    RealEstateService.list()
-        .then(result => res.json(result))
-        .catch(err => res.status(500).json(err));
+    const cidade = req.query.cidade as string;
+    const menorValor = req.query.menorValor as unknown as number;
+    const maiorValor = req.query.maiorValor as unknown as number;
+    if (cidade !== undefined && cidade !== null){
+        RealEstateService.findByCity(cidade)
+            .then(result => res.json(result))
+            .catch(err => res.status(500).json(err));
+    } else if (menorValor !== undefined && maiorValor !== undefined){
+        RealEstateService.orderByPrice(menorValor, maiorValor)
+            .then(result => res.json(result))
+            .catch(err => res.status(500).json(err));
+    } else {
+        RealEstateService.list()
+            .then(result => res.json(result))
+            .catch(err => res.status(500).json(err));
+    }
 })
 
 routes.get('/real-estate/:id', (req: Request, res: Response) => {

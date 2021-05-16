@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import RealEstateInterface from '../interfaces/RealEstateInterface';
 import RealEstate from '../model/RealEstate';
 
@@ -9,7 +10,7 @@ class RealEstateService{
     }
 
     static async list() {
-        return await RealEstate.findAll();
+        return await RealEstate.findAll({where: {isActive: true}});
     }
 
     static async getById(id: number){
@@ -22,6 +23,23 @@ class RealEstateService{
     
     static async delete(id: number){
         return await RealEstate.update({ isActive: false }, {where: {id}});
+    }
+
+    static async findByCity(cidade: string){
+        return await RealEstate.findAll({where: {cidade, isActive: true}})
+    }
+
+    static async orderByPrice(minValue: number, maxValue: number){
+        return await RealEstate.findAll({ 
+            where: {
+                preco: {
+                    [Op.gte]: minValue,
+                    [Op.lte]: maxValue
+                },
+                isActive: true
+            }, 
+            order: ['preco']
+        })
     }
 
 }

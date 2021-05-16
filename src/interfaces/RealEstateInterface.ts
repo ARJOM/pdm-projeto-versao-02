@@ -1,5 +1,6 @@
 interface RealEstateInterface{
     id: number
+    preco: number
     cidade: string
     bairro: string
     rua: string
