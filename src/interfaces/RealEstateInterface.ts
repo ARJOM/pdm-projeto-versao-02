@@ -8,7 +8,6 @@ interface RealEstateInterface{
     descricao: string
     metrosQuadrados: number
     userId: number
-    imagens: string //link para o firebase
     isActive: boolean
 }
 
