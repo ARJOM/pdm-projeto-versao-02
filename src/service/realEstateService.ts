@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import RealEstateInterface from '../interfaces/RealEstateInterface';
 import RealEstate from '../model/RealEstate';
+import User from '../model/User';
 
 class RealEstateService{
 
@@ -10,11 +11,11 @@ class RealEstateService{
     }
 
     static async list() {
-        return await RealEstate.findAll({where: {isActive: true}});
+        return await RealEstate.findAll({include: [User], where: {isActive: true}});
     }
 
     static async getById(id: number){
-        return await RealEstate.findOne({where: {id}})
+        return await RealEstate.findOne({include: [User], where: {id}})
     }
 
     static async update(id: number, updatedRealEstate: RealEstateInterface){
@@ -26,11 +27,12 @@ class RealEstateService{
     }
 
     static async findByCity(cidade: string){
-        return await RealEstate.findAll({where: {cidade, isActive: true}})
+        return await RealEstate.findAll({include: [User], where: {cidade, isActive: true}})
     }
 
     static async orderByPrice(minValue: number, maxValue: number){
         return await RealEstate.findAll({ 
+            include: [User],
             where: {
                 preco: {
                     [Op.gte]: minValue,
@@ -43,7 +45,7 @@ class RealEstateService{
     }
 
     static async findByUser(userId: number){
-        return await RealEstate.findAll({where: {userId, isActive: true}})
+        return await RealEstate.findAll({include: [User], where: {userId, isActive: true}})
     }
 
 }

@@ -104,9 +104,10 @@ Imóvel
     userId: number
     imagens: string
     isActive: boolean
+    user: Usuario
 }
 ```
-OBS: Os campos id, isActive, createdAt e updatedAt não precisam ser informados na criação ou atualização de recursos.
+OBS: Os campos id, isActive, createdAt e updatedAt não precisam ser informados na criação ou atualização de recursos. O campo user é definido pelo atributo userId.
 
 ### Login
 URL | Método | Descrição 
