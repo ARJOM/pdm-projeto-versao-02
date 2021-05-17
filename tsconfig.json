@@ -2,5 +2,5 @@
     "compilerOptions": {
         "experimentalDecorators": true
     },
-    "extends": "@tsconfig/node14/tsconfig.json"
+    "extends": "@tsconfig/recommended/tsconfig.json"
 }
