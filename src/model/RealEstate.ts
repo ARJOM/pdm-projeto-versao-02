@@ -13,6 +13,10 @@ class RealEstate extends Model {
   descricao!: string
 
   @AllowNull(false)
+  @Column(DataType.TEXT)
+  imagens!: string
+
+  @AllowNull(false)
   @Column(DataType.NUMBER)
   metrosQuadrados!: number
 

@@ -102,6 +102,7 @@ Imóvel
     descricao: string
     metrosQuadrados: number
     userId: number
+    imagens: string
     isActive: boolean
     user: Usuario
 }
