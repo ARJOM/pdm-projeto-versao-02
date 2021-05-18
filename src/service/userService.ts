@@ -1,4 +1,5 @@
 import UserInterface from '../interfaces/UserInterface';
+import RealEstate from '../model/RealEstate';
 import User from '../model/User';
 
 class UserService{
@@ -21,7 +22,17 @@ class UserService{
     }
     
     static async delete(id: number){
-        return await User.update({ isActive: false }, {where: {id}});
+        await User.update({ isActive: false }, { where: {id}});
+        await User.findOne({ include: [RealEstate], where: {id} })
+            .then(user => {
+                if (user !== null){
+                    user.realEstate.forEach(realEstate => {
+                        realEstate.isActive = false;
+                        realEstate.save();
+                    });
+                }
+            });
+        return {'msg': 'Usario removido'}
     }
 
 }
