@@ -2,12 +2,11 @@ import { Request, Response, Router } from 'express';
 import RealEstateService from '../service/realEstateService';
 import RealEstateInterface from '../interfaces/RealEstateInterface';
 import verifyJWT from '../utils/verifyAuth';
-import RealEstate from '../model/RealEstate';
 
 const routes = Router();
 
 routes.post('/real-estate', verifyJWT, (req: Request, res: Response) => {
-    const id = req.params.id as unknown as number;
+    const id = req.params.userId as unknown as number;
     const realEstate = req.body as RealEstateInterface;
     realEstate.userId = id
     RealEstateService.save(realEstate)
@@ -35,7 +34,7 @@ routes.get('/real-estate', (req: Request, res: Response) => {
 })
 
 routes.get('/real-estate/user', verifyJWT, (req: Request, res: Response) => {
-    const id = req.params.id as unknown as number;
+    const id = req.params.userId as unknown as number;
     RealEstateService.findByUser(id)
         .then(result => res.json(result))
         .catch(err => res.status(500).json(err));
